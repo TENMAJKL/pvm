@@ -1,0 +1,9 @@
+{
+    "name": "majkel/pisp",
+    "autoload": {
+        "psr-4": {
+            "Majkel\\Pisp\\": "pisp/"
+        }
+    },
+    "require": {}
+}

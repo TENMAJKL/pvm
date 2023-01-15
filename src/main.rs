@@ -52,11 +52,30 @@ fn interpret(commands: Vec<Command>) {
         command = commands[pointer as usize];
         match command.kind {
             CommandKind::Psh => { stack.push(command.argument); },
-            CommandKind::Pop => { stack.pop().expect("PVM panic: unable to reach stack top"); },
-            CommandKind::Out => { print!("{}", stack.pop().expect("PVM panic: unable to reach stack top") as char); },
+            CommandKind::Pop => { stack.pop().expect("System panic: unable to reach stack top"); },
+            CommandKind::Out => { print!("{}", stack.pop().expect("System panic: unable to reach stack top") as char); },
             CommandKind::Jmp => { pointer = command.argument; continue; },
-            CommandKind::Edg => { if stack.last().expect("PVM panic: unable to reach stack top").eq(&0) { pointer += 1; } },
-            _ => panic!("Not implemented"),
+            CommandKind::Edg => { if stack.last().expect("System panic: unable to reach stack top").eq(&0) { pointer += 1; } },
+            CommandKind::Add => { 
+                let first = stack.pop().expect("System panic: unable to reach stack top");
+                let second = stack.pop().expect("System panic: unable to reach stack top");
+                stack.push(second + first);
+            },
+            CommandKind::Sub => { 
+                let first = stack.pop().expect("System panic: unable to reach stack top");
+                let second = stack.pop().expect("System panic: unable to reach stack top");
+                stack.push(second - first);
+            },
+            CommandKind::Mul => { 
+                let first = stack.pop().expect("System panic: unable to reach stack top");
+                let second = stack.pop().expect("System panic: unable to reach stack top");
+                stack.push(second * first);
+            },
+            CommandKind::Div => { 
+                let first = stack.pop().expect("System panic: unable to reach stack top");
+                let second = stack.pop().expect("System panic: unable to reach stack top");
+                stack.push(second / first);
+            }
         };
         pointer += 1;
     }
