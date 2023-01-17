@@ -17,6 +17,9 @@ As look mum no computer says: "procrastinate as long as it is productive."
 - mul - multiplies 2 numers on the stack
 - div - divides 2 numbers on the stack
 - edg - executes next command only if there is 1 on the top of the stack
+- set {pointer} - sets popped value to given pointer
+- get {pointer} - pushes value on given pointer 
+- iot - outputs popped value as int
 - and thats all for now
 
 

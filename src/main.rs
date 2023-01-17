@@ -11,6 +11,9 @@ enum CommandKind {
     Mul,
     Div,
     Edg,
+    Set,
+    Get,
+    Iot
 }
 
 #[derive(Clone, Copy)]
@@ -35,6 +38,9 @@ fn parse(code: String) -> Vec<Command> {
             "mul" => Command { kind: CommandKind::Mul, argument: 0 },
             "div" => Command { kind: CommandKind::Div, argument: 0 }, 
             "edg" => Command { kind: CommandKind::Edg, argument: 0 },
+            "set" => Command { kind: CommandKind::Set, argument: command[1].parse::<u8>().unwrap() },
+            "get" => Command { kind: CommandKind::Get, argument: command[1].parse::<u8>().unwrap() },
+            "iot" => Command { kind: CommandKind::Iot, argument: 0 },
             _ => panic!("System panic: unknown command")
         });
     }
@@ -75,7 +81,16 @@ fn interpret(commands: Vec<Command>) {
                 let first = stack.pop().expect("System panic: unable to reach stack top");
                 let second = stack.pop().expect("System panic: unable to reach stack top");
                 stack.push(second / first);
-            }
+            },
+            CommandKind::Set => {
+                let value = stack.pop().expect("System panic: unable to reach stack top");
+                stack[command.argument as usize] = value;
+            },
+            CommandKind::Get => {
+                let value = stack[command.argument as usize];
+                stack.push(value);
+            },
+            CommandKind::Iot => { print!("{}", stack.pop().expect("System panic: unable to reach stack top")); }
         };
         pointer += 1;
     }
