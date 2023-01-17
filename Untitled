@@ -1,0 +1,7 @@
+<?php
+
+namespace Majkel\Pisp\AST;
+
+class ReturnNode
+{
+}

@@ -1,8 +1,11 @@
-psh 10
-psh 20
+jmp 4
+
+; parek
+psh 65
 get 0
-iot
-psh 10
+jmp
+
+; main
+psh 6
+jmp 1
 out
-set 0
-iot

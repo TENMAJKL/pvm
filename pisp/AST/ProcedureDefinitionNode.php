@@ -14,4 +14,16 @@ class ProcedureDefinitionNode implements Node
     ) {
         $this->body = $body;
     }
+
+    public function print(): array
+    {
+        $body = [];
+        foreach ($this->body as $node) {
+            foreach ($node->print() as $command) {
+                $body[] = $command;
+            }
+        }
+
+        return $body;
+    }
 }

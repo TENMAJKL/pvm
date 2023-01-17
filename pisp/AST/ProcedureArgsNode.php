@@ -2,6 +2,8 @@
 
 namespace Majkel\Pisp\AST;
 
+use CompileError;
+
 class ProcedureArgsNode implements Node
 {
     public readonly array $args;
@@ -10,4 +12,9 @@ class ProcedureArgsNode implements Node
     {
         $this->args = $args;
     } 
+
+    public function print(): string
+    {
+        throw new CompileError('WHY EXACTLY THIS HAPPENED?');
+    }
 }

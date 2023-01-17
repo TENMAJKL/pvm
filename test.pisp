@@ -1,1 +1,2 @@
-proc(entry, args(foo), int, 1)
+proc(parek, args(), int, 65)
+proc(entry, args(), int, parek())

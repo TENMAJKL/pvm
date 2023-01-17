@@ -9,4 +9,9 @@ class NumberNode implements Node
     ) {
 
     }
+
+    public function print(): array
+    {
+        return [(string) $this->number];
+    }
 }

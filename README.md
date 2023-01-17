@@ -22,4 +22,6 @@ As look mum no computer says: "procrastinate as long as it is productive."
 - iot - outputs popped value as int
 - and thats all for now
 
+## PISP
 
+I want to create lisp thhat would compile to pasm. I started but it won't be that simple, so I should go back to socka and if I have time I would work on it ig.
