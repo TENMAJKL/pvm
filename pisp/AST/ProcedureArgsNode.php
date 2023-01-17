@@ -13,7 +13,7 @@ class ProcedureArgsNode implements Node
         $this->args = $args;
     } 
 
-    public function print(): string
+    public function print(): array
     {
         throw new CompileError('WHY EXACTLY THIS HAPPENED?');
     }

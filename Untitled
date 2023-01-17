@@ -2,6 +2,6 @@
 
 namespace Majkel\Pisp\AST;
 
-class ReturnNode
+class UserProcCall
 {
 }

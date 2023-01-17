@@ -2,6 +2,7 @@
 
 use Majkel\Pisp\Lexer;
 use Majkel\Pisp\Parser;
+use Majkel\Pisp\Generator;
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -17,4 +18,8 @@ $lexer = new Lexer(file_get_contents($name));
 
 $parser = new Parser($lexer->lex());
 
-print_r($parser->parse());
+$generator = new Generator();
+
+$result = $generator->generate($parser->parse());
+
+file_put_contents(explode('.', $name)[0].'.pasm', $result);

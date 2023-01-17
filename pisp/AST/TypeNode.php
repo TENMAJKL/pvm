@@ -13,4 +13,9 @@ class TypeNode implements Node
     ) {
 
     }
+
+    public function print(): array
+    {
+        return [];
+    }
 }

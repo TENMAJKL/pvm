@@ -3,17 +3,18 @@
 namespace Majkel\Pisp;
 
 use CompileError;
-use Generator;
 use Majkel\Pisp\AST\NameNode;
 use Majkel\Pisp\AST\Node;
 use Majkel\Pisp\AST\NumberNode;
+use Majkel\Pisp\AST\ReturnNode;
+use Majkel\Pisp\AST\UserProcCall;
 use Majkel\Pisp\AST\ProcedureDefinitionNode;
 use Majkel\Pisp\AST\ProcedureArgsNode;
 use Majkel\Pisp\AST\TypeNode;
 
 class Parser
 {
-
+    private array $procedures;
 
     public function __construct(
         private Stream $tokens
@@ -23,8 +24,9 @@ class Parser
     public function parse(): array
     { 
         $tokens = [];
-        while ($this->tokens->peek()) {
+        while ($this->tokens->current()) {
             $tokens[] = $this->parseToken();
+            $this->tokens->move();
         }
         return $tokens;
     }
@@ -63,23 +65,20 @@ class Parser
             return new NameNode($symbol);
         }
 
-        $this->tokens->move();
+        $this->tokens->move(2);
 
         $children = [];
 
-        do {
-            $this->tokens->move();
+        while ($this->tokens->current()->kind !== TokenKind::Close) {
             $children[] = $this->parseToken();
-        } while ($this->tokens->move()->kind == TokenKind::Comma);
-
-        if ($this->tokens->current()->kind !== TokenKind::Close) {
-            throw new CompileError('Expected )');
+            $this->tokens->move();
         }
 
-        return new (match ($name) {
-            'proc', 'procedure' => ProcedureDefinitionNode::class,
-            'args' => ProcedureArgsNode::class,
-            default => throw new CompileError('Undefined symbol')
-        })(...$children);
+        return match ($name) {
+            'proc', 'procedure' => new ProcedureDefinitionNode(...$children),
+            'args' => new ProcedureArgsNode(...$children),
+            'return' => new ReturnNode(...$children),
+            default => new UserProcCall($name, ...$children)
+        };
     }
 }

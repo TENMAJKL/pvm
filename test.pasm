@@ -1,11 +1,10 @@
-jmp 4
-
-; parek
-psh 65
-get 0
+psh 9
+jmp 6
+psh 1
+swp
 jmp
-
-; main
-psh 6
-jmp 1
-out
+psh %curent
+jmp %proc_parek
+swp
+jmp
+ext

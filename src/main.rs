@@ -1,4 +1,4 @@
-use std::{fs, env};
+use std::{fs, env, process::exit};
 
 #[derive(Clone, Copy, Debug)]
 enum CommandKind {
@@ -13,7 +13,9 @@ enum CommandKind {
     Edg,
     Set,
     Get,
-    Iot
+    Iot,
+    Swp,
+    Ext,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -44,6 +46,8 @@ fn parse(code: String) -> Vec<Command> {
             "set" => Command { kind: CommandKind::Set, argument: Some(command[1].parse::<u8>().unwrap()) },
             "get" => Command { kind: CommandKind::Get, argument: Some(command[1].parse::<u8>().unwrap()) },
             "iot" => Command { kind: CommandKind::Iot, argument: None },
+            "swp" => Command { kind: CommandKind::Swp, argument: None },
+            "ext" => Command { kind: CommandKind::Ext, argument: None },
             _ => panic!("System panic: unknown command")
         });
     }
@@ -93,7 +97,15 @@ fn interpret(commands: Vec<Command>) {
                 let value = stack[command.argument.unwrap() as usize];
                 stack.push(value);
             },
-            CommandKind::Iot => { print!("{}", stack.pop().expect("System panic: unable to reach stack top")); }
+            CommandKind::Iot => { print!("{}", stack.pop().expect("System panic: unable to reach stack top")); },
+            CommandKind::Swp => { 
+                let first = stack.pop().expect("System panic: unable to reach stack top");
+                let second = stack.pop().expect("System panic: unable to reach stack top");               
+
+                stack.push(first);
+                stack.push(second);
+            },
+            CommandKind::Ext => { exit(stack.pop().expect("System panic: unable to reach stack top") as i32); }
         };
         pointer += 1;
     }

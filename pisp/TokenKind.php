@@ -11,7 +11,6 @@ enum TokenKind
     case Number;
     case Symbol;
     case Comment;
-    case Comma;
 
     public static function fromRe(string $re): self
     {
@@ -23,7 +22,6 @@ enum TokenKind
            'Number' => self::Number,
            'Comment' => self::Comment,
            'Symbol' => self::Symbol,
-           'Comma' => self::Comma,
         };
     }
 }

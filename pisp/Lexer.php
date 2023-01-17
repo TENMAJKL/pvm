@@ -13,7 +13,6 @@ class Lexer
         |(?<Number>\d)
         |(?<Comment>;;.+?\n|;-.+?-;)
         |(?<Line>\n)
-        |(?<Comma>,)
         |(?<Symbol>[a-zA-Z0-9\+\-\*/\<\>=\$\#\@]+)
         |(?<White> )
         ~xsA';

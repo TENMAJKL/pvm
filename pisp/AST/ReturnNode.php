@@ -12,6 +12,11 @@ class ReturnNode implements Node
 
     public function print(): array
     {
-        return ['psh '.$this->value->print()[0], 'get ', 'jmp']
+        if ($this->value instanceof NumberNode) {
+            $psh = ['psh '.$this->value->print()[0]];
+        } else {
+            $psh = $this->value->print();
+        }
+        return [...$psh, 'swp', 'jmp'];
     }
 }

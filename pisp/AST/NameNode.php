@@ -9,4 +9,9 @@ class NameNode implements Node
     ) {
 
     }
+
+    public function print(): array
+    {
+        return [];
+    }
 }
